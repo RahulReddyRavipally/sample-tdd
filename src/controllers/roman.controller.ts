@@ -1,4 +1,4 @@
-import {GET, Path, PathParam} from 'typescript-rest';
+import {GET, Path, PathParam, QueryParam} from 'typescript-rest';
 import {Inject} from 'typescript-ioc';
 import {RomanApi} from '../services';
 import {LoggerApi} from '../logger';
@@ -16,9 +16,9 @@ export class RomanController {
   }
 
   @GET
-  async RomanUnknown(): Promise<string> {
+  async RomanUnknown(@QueryParam("value") value: number): Promise<string> {
     this.logger.info('Saying hello to someone');
-    return this.service.roman();
+    return this.service.roman(value);
   }
 
 }

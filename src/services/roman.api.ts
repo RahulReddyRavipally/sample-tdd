@@ -1,3 +1,3 @@
 export abstract class RomanApi {
-  abstract roman(name?: string): Promise<string>;
+  abstract roman(number?: number): Promise<string>;
 }
