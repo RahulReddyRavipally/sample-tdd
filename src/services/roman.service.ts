@@ -1,6 +1,7 @@
 import {RomanApi} from './roman.api';
 import {Inject} from 'typescript-ioc';
 import {LoggerApi} from '../logger';
+import { BadRequestError } from 'typescript-rest/dist/server/model/errors';
 
 export class RomanService implements RomanApi {
   logger: LoggerApi;
@@ -35,10 +36,10 @@ export class RomanService implements RomanApi {
         return 'nulla'
     }
     if (number % 1 !== 0){
-        return 'ERROR'
+        throw new BadRequestError('Invalid!')
     }
     if (number > 3999 || number <0){
-        return 'ERROR'
+      throw new BadRequestError('Invalid!')
     }
     mapping.forEach(function (item){
         while(number >= item.value){

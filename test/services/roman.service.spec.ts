@@ -108,13 +108,13 @@ describe('Hello World service', () =>{
         expect( await service.roman(0)).toEqual('nulla')
      })
      test('take float 1.1 and return ERROR',async () => {
-      expect( await service.roman(1.1)).toEqual('ERROR')
+      await expect(service.roman(1.1)).rejects.toThrow('Invalid!');
    })
      test('take number 4000 and return ERROR',async () => {
-        expect( await service.roman(4000)).toEqual('ERROR')
+      await expect(service.roman(4000)).rejects.toThrow('Invalid!');
      })
      test('take number -1 and return ERROR',async () => {
-      expect( await service.roman(-1)).toEqual('ERROR')
+      await expect(service.roman(-1)).rejects.toThrow('Invalid!');
    })
 
 

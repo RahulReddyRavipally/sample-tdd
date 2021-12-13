@@ -1,6 +1,7 @@
 import {NumberApi} from './number.api';
 import {Inject} from 'typescript-ioc';
 import {LoggerApi} from '../logger';
+import { BadRequestError } from 'typescript-rest/dist/server/model/errors';
 
 export class NumberService implements NumberApi {
   logger: LoggerApi;
@@ -68,7 +69,7 @@ else if(sum > 3999){
 }
 
 if (sum == -1){
-    return -1;
+    throw new BadRequestError('Invalid!');
 }
 else{
     return sum;

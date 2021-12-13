@@ -92,19 +92,19 @@ describe('Hello World service', () =>{
       expect( await service.number('nulla')).toEqual(0)
    })
    test('take roman XXXXIV and return ERROR',async () => {
-      expect( await service.number('XXXXIV')).toEqual(-1)
+      await expect(service.number('XXXXIV')).rejects.toThrow('Invalid!');
    })
    test('take roman LXXXXIX and return ERROR',async () => {
-      expect( await service.number('LXXXXIX')).toEqual(-1)
+      await expect(service.number('LXXXXIX')).rejects.toThrow('Invalid!');
    })
    test('take roman CCCCII and return ERROR',async () => {
-      expect( await service.number('CCCCII')).toEqual(-1)
+      await expect(service.number('CCCCII')).rejects.toThrow('Invalid!');
    })
    test('take roman DCCCCXXIV and return ERROR',async () => {
-      expect( await service.number('DCCCCXXIV')).toEqual(-1)
+      await expect(service.number('DCCCCXXIV')).rejects.toThrow('Invalid!');
    })
    test('take roman MMMM and return ERROR',async () => {
-      expect( await service.number('MMMM')).toEqual(-1)
+      await expect(service.number('MMMM')).rejects.toThrow('Invalid!');
    })
    test('take roman i and return 1',async () => {
       expect( await service.number('i')).toEqual(1)
