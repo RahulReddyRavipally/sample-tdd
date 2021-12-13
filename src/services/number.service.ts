@@ -13,13 +13,7 @@ export class NumberService implements NumberApi {
     this.logger = logger.child('NumberService');
   }
 
-  
-
-  async number(roman: string = 'I'): Promise<number> {
-    roman = roman.toUpperCase();
-
-var response = 0
-var obj = {
+   obj = {
     'I' : 1,
     'V' : 5,
     'X' : 10,
@@ -28,12 +22,19 @@ var obj = {
     'D' : 500,
     'M' : 1000
  }
+
+  async number(roman: string = 'I'): Promise<number> {
+    roman = roman.toUpperCase();
+
+var response = 0
+
  if (roman == 'nulla' || roman == 'NULLA'){
      return 0;
  }
+this.validateRoman(roman);
 var sum = 0
 for (var i = 0; i < roman.length; i++) {
-    sum = sum + obj[roman.charAt(i)]
+    sum = sum + this.obj[roman.charAt(i)]
 }
 if (roman.includes('IV') || roman.includes('IX')){
         sum = sum - 2
@@ -44,35 +45,22 @@ if (roman.includes('XL') || roman.includes('XC')){
 if (roman.includes('CD') || roman.includes('CM')){
     sum = sum - 200
 }
-if (sum >= 40 && sum <=50){
-    if (!roman.includes('L')){
-        sum = -1
-    }
-}
-else if (sum >= 90 && sum <=100){
-    if (!roman.includes('C')){
-        sum = -1
-    }
-}
-else if (sum >= 400 && sum <=500){
-    if (!roman.includes('D')){
-        sum = -1
-    }
-}
-else if (sum >= 900 && sum <=1000){
-    if (!roman.includes('M')){
-        sum = -1
-    }
-}
-else if(sum > 3999){
-    sum = - 1
-}
 
-if (sum == -1){
-    throw new BadRequestError('Invalid!');
+return sum;
+
+  
 }
-else{
-    return sum;
-}
-}
+private validateRoman(value: string) {
+    for (let i = 0; i < value.length; i++) {
+      if (!(value[i] in this.obj))
+        throw new BadRequestError('Invalid!');
+      if (!isNaN(Number(value[i])))
+        throw new BadRequestError('Invalid!');
+    }
+    const RE = /^M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$/;
+    if (!(RE.test(value)))
+      throw new BadRequestError('Invalid!');
+  }
+
+  
 }
